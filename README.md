@@ -1,1 +1,1 @@
-# kakaotech.campus_assignment1
+# kakaotechcampus_assignment1
