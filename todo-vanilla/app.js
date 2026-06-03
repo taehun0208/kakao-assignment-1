@@ -238,10 +238,6 @@ function setFilter(filter) {
   renderTodos();
 }
 
-function getActiveFilter() {
-  return activeFilter;
-}
-
 btnAdd.addEventListener('click', addTodo);
 todoInput.addEventListener('keydown', e => {
   // 한글 조합 중 Enter 시 이중 등록 방지
