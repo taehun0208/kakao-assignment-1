@@ -11,12 +11,18 @@ let todos = [];
 /** 현재 선택된 필터: 'all' | 'active' | 'completed' */
 let activeFilter = 'all';
 
+/** 현재 선택된 날짜 (Date 객체) */
+let selectedDate = new Date();
+
 // ===== DOM 참조 =====
-const todoInput   = document.getElementById('todoInput');
-const btnAdd      = document.getElementById('btnAdd');
-const todoList    = document.getElementById('todoList');
-const inputError  = document.getElementById('inputError');
+const todoInput    = document.getElementById('todoInput');
+const btnAdd       = document.getElementById('btnAdd');
+const todoList     = document.getElementById('todoList');
+const inputError   = document.getElementById('inputError');
 const emptyMessage = document.getElementById('emptyMessage');
+const currentDateEl = document.getElementById('currentDate');
+const btnPrevDay   = document.getElementById('btnPrevDay');
+const btnNextDay   = document.getElementById('btnNextDay');
 
 // ===== 로컬스토리지 =====
 
@@ -196,12 +202,37 @@ function hideInputError() {
   todoInput.classList.remove('error');
 }
 
-// ===== 스텁 (기능 3에서 교체됨) =====
+// ===== 기능 3: 일간 뷰 =====
 
-/** 현재 선택된 날짜 반환 (기능 3에서 구현) */
-function getSelectedDate() {
-  return new Date().toISOString().split('T')[0];
+/** Date 객체를 "YYYY-MM-DD" 문자열로 변환 */
+function toDateString(date) {
+  return date.toISOString().split('T')[0];
 }
+
+/** 현재 선택된 날짜를 "YYYY-MM-DD" 형식으로 반환 */
+function getSelectedDate() {
+  return toDateString(selectedDate);
+}
+
+/** 날짜 네비게이터 UI 갱신 */
+function renderDateNavigator() {
+  const dateStr = getSelectedDate();
+  const today   = toDateString(new Date());
+
+  // 오늘이면 "오늘" 표시, 아니면 날짜 그대로
+  currentDateEl.textContent = dateStr === today ? `오늘 (${dateStr})` : dateStr;
+}
+
+/** 날짜를 delta일만큼 이동 */
+function moveDate(delta) {
+  selectedDate.setDate(selectedDate.getDate() + delta);
+  renderDateNavigator();
+  renderTodos();
+}
+
+// 날짜 네비게이터 이벤트 바인딩
+btnPrevDay.addEventListener('click', () => moveDate(-1));
+btnNextDay.addEventListener('click', () => moveDate(1));
 
 // ===== 기능 2: 필터 탭 =====
 
@@ -238,4 +269,5 @@ todoInput.addEventListener('input', () => {
 
 // ===== 초기화 =====
 loadTodos();
+renderDateNavigator();
 renderTodos();
