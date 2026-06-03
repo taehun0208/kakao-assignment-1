@@ -14,16 +14,16 @@
 
     <!-- 날짜 네비게이터 (기능 3에서 활성화) -->
     <div class="date-navigator">
-      <button class="btn-date-nav" id="btnPrevDay" aria-label="이전 날짜">&#8249;</button>
+      <button type="button" class="btn-date-nav" id="btnPrevDay" aria-label="이전 날짜">&#8249;</button>
       <span class="current-date" id="currentDate"></span>
-      <button class="btn-date-nav" id="btnNextDay" aria-label="다음 날짜">&#8250;</button>
+      <button type="button" class="btn-date-nav" id="btnNextDay" aria-label="다음 날짜">&#8250;</button>
     </div>
 
     <!-- 필터 탭 (기능 2에서 활성화) -->
     <nav class="filter-tabs">
-      <button class="tab active" data-filter="all">전체</button>
-      <button class="tab" data-filter="active">진행 중</button>
-      <button class="tab" data-filter="completed">완료</button>
+      <button type="button" class="tab active" data-filter="all">전체</button>
+      <button type="button" class="tab" data-filter="active">진행 중</button>
+      <button type="button" class="tab" data-filter="completed">완료</button>
     </nav>
 
     <!-- Todo 입력 -->
@@ -35,7 +35,7 @@
         placeholder="할 일을 입력하세요"
         autocomplete="off"
       />
-      <button class="btn-add" id="btnAdd">추가</button>
+      <button type="button" class="btn-add" id="btnAdd">추가</button>
     </div>
     <p class="input-error hidden" id="inputError">할 일을 입력해주세요.</p>
 

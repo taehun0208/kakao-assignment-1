@@ -261,7 +261,8 @@ document.querySelectorAll('.tab').forEach(tab => {
 // ===== 이벤트 바인딩 =====
 btnAdd.addEventListener('click', addTodo);
 todoInput.addEventListener('keydown', e => {
-  if (e.key === 'Enter') addTodo();
+  // isComposing: 한글 조합 중 Enter 시 이중 등록 방지
+  if (e.key === 'Enter' && !e.isComposing) addTodo();
 });
 todoInput.addEventListener('input', () => {
   if (todoInput.value.trim()) hideInputError();
