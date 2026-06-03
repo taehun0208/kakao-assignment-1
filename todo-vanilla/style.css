@@ -49,42 +49,134 @@ body {
   letter-spacing: -0.5px;
 }
 
-/* ===== 날짜 네비게이터 ===== */
-.date-navigator {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
+/* ===== 주간 뷰 ===== */
+.week-navigator {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 12px 14px;
   margin-bottom: 20px;
+  box-shadow: var(--shadow-card);
 }
 
-.btn-date-nav {
-  width: 32px;
-  height: 32px;
+.week-nav-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.btn-week-nav {
+  width: 28px;
+  height: 28px;
   border: none;
   border-radius: 50%;
   background: var(--color-primary-bg);
   color: var(--color-primary);
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   line-height: 1;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: background 0.15s;
+  flex-shrink: 0;
 }
 
-.btn-date-nav:hover {
+.btn-week-nav:hover {
   background: var(--color-primary);
   color: #fff;
 }
 
-.current-date {
-  font-size: 1rem;
+.week-range {
+  font-size: 0.85rem;
   font-weight: 600;
   color: var(--color-text);
-  min-width: 110px;
   text-align: center;
+}
+
+/* 7일 컬럼 그리드 */
+.week-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.week-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 4px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background 0.15s;
+  border: 1.5px solid transparent;
+}
+
+.week-day:hover {
+  background: var(--color-primary-bg);
+}
+
+/* 오늘 */
+.week-day.today {
+  border-color: var(--color-primary);
+}
+
+/* 선택된 날짜 */
+.week-day.selected {
+  background: var(--color-primary);
+}
+
+.week-day.selected .day-name,
+.week-day.selected .day-date {
+  color: #fff;
+}
+
+.week-day.selected .day-count {
+  background: rgba(255, 255, 255, 0.3);
+  color: #fff;
+}
+
+/* 주말 */
+.week-day.weekend .day-name,
+.week-day.weekend .day-date {
+  color: #ef4444;
+}
+
+.week-day.selected.weekend .day-name,
+.week-day.selected.weekend .day-date {
+  color: #fff;
+}
+
+.day-name {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+.day-date {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: 1;
+}
+
+/* Todo 개수 뱃지 */
+.day-count {
+  font-size: 0.68rem;
+  font-weight: 600;
+  background: var(--color-primary-bg);
+  color: var(--color-primary);
+  border-radius: 99px;
+  padding: 1px 6px;
+  min-width: 18px;
+  text-align: center;
+}
+
+/* 개수 없을 때 자리 유지용 (빈 공간) */
+.day-count.empty {
+  visibility: hidden;
 }
 
 /* ===== 필터 탭 ===== */
