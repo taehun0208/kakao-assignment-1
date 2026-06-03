@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Todo</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <header class="app-header">
+      <h1 class="app-title">Todo</h1>
+    </header>
+
+    <!-- 날짜 네비게이터 (기능 3에서 활성화) -->
+    <div class="date-navigator">
+      <button class="btn-date-nav" id="btnPrevDay" aria-label="이전 날짜">&#8249;</button>
+      <span class="current-date" id="currentDate"></span>
+      <button class="btn-date-nav" id="btnNextDay" aria-label="다음 날짜">&#8250;</button>
+    </div>
+
+    <!-- 필터 탭 (기능 2에서 활성화) -->
+    <nav class="filter-tabs">
+      <button class="tab active" data-filter="all">전체</button>
+      <button class="tab" data-filter="active">진행 중</button>
+      <button class="tab" data-filter="completed">완료</button>
+    </nav>
+
+    <!-- Todo 입력 -->
+    <div class="input-area">
+      <input
+        type="text"
+        id="todoInput"
+        class="todo-input"
+        placeholder="할 일을 입력하세요"
+        autocomplete="off"
+      />
+      <button class="btn-add" id="btnAdd">추가</button>
+    </div>
+    <p class="input-error hidden" id="inputError">할 일을 입력해주세요.</p>
+
+    <!-- Todo 목록 -->
+    <ul class="todo-list" id="todoList"></ul>
+
+    <!-- 빈 상태 안내 -->
+    <p class="empty-message hidden" id="emptyMessage">할 일이 없어요 ☀️</p>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
