@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState } from 'react';
+import { Check, Pencil, Trash2 } from 'lucide-react';
 import type { Todo } from '../types';
 
 interface Props {
@@ -47,7 +48,24 @@ export default function TodoItem({
   }
 
   return (
-    <li className={`flex items-center gap-3 p-3 rounded-lg border ${todo.completed ? 'bg-gray-50 border-gray-200' : 'bg-white border-gray-200'} mb-2`}>
+    <li className={`group flex items-center gap-3 px-3 py-2.5 rounded-xl border transition-colors mb-2 ${
+      todo.completed
+        ? 'bg-gray-50 border-gray-100'
+        : 'bg-white border-gray-200 hover:border-gray-300'
+    }`}>
+      <button
+        type="button"
+        onClick={() => onToggle(todo.id)}
+        aria-label={todo.completed ? '완료 취소' : '완료'}
+        className={`shrink-0 w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors ${
+          todo.completed
+            ? 'bg-green-500 border-green-500 text-white'
+            : 'border-gray-300 hover:border-green-400'
+        }`}
+      >
+        {todo.completed && <Check size={10} strokeWidth={3} />}
+      </button>
+
       {isEditing ? (
         <div className="flex-1 flex flex-col gap-1">
           <input
@@ -57,7 +75,7 @@ export default function TodoItem({
             onKeyDown={handleKeyDown}
             onBlur={confirmEdit}
             onChange={() => setEditError(false)}
-            className={`border rounded px-2 py-1 text-sm outline-none focus:ring-2 ${
+            className={`border rounded-lg px-2 py-1 text-sm outline-none focus:ring-2 ${
               editError
                 ? 'border-red-400 focus:ring-red-200'
                 : 'border-indigo-400 focus:ring-indigo-300'
@@ -68,33 +86,30 @@ export default function TodoItem({
           )}
         </div>
       ) : (
-        <span className={`flex-1 text-sm ${todo.completed ? 'line-through text-gray-400' : 'text-gray-700'}`}>
+        <span className={`flex-1 text-sm ${
+          todo.completed ? 'line-through text-gray-400' : 'text-gray-700'
+        }`}>
           {todo.text}
         </span>
       )}
 
       {!isEditing && (
-        <div className="flex gap-1 shrink-0">
-          <button
-            type="button"
-            onClick={() => onToggle(todo.id)}
-            className={`text-xs px-2 py-1 rounded ${todo.completed ? 'bg-gray-200 text-gray-600 hover:bg-gray-300' : 'bg-green-100 text-green-700 hover:bg-green-200'}`}
-          >
-            {todo.completed ? '취소' : '완료'}
-          </button>
+        <div className="flex gap-0.5 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
           <button
             type="button"
             onClick={() => onStartEdit(todo.id)}
-            className="text-xs px-2 py-1 rounded bg-indigo-100 text-indigo-700 hover:bg-indigo-200"
+            aria-label="수정"
+            className="w-7 h-7 flex items-center justify-center rounded-lg text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 transition-colors"
           >
-            수정
+            <Pencil size={14} />
           </button>
           <button
             type="button"
             onClick={() => onDelete(todo.id)}
-            className="text-xs px-2 py-1 rounded bg-red-100 text-red-700 hover:bg-red-200"
+            aria-label="삭제"
+            className="w-7 h-7 flex items-center justify-center rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-50 transition-colors"
           >
-            삭제
+            <Trash2 size={14} />
           </button>
         </div>
       )}

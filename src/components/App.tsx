@@ -25,9 +25,9 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="max-w-xl mx-auto px-4 py-8">
+      <div className="max-w-xl mx-auto px-4 py-10">
         <header className="mb-6 text-center">
-          <h1 className="text-2xl font-bold text-gray-800">Todo</h1>
+          <h1 className="text-2xl font-bold text-gray-800 tracking-tight">Todo</h1>
           <p className="text-sm text-gray-400 mt-1">{formatDateLabel(selectedDate)}</p>
         </header>
 
@@ -39,7 +39,7 @@ export default function App() {
           onMoveWeek={delta => setWeekOffset(prev => prev + delta)}
         />
 
-        <div className="bg-white border border-gray-200 rounded-xl p-4">
+        <div className="bg-white border border-gray-200 rounded-2xl p-4 shadow-sm">
           <FilterTabs activeFilter={activeFilter} onFilterChange={changeFilter} />
           <TodoInput onAdd={addTodo} />
           <TodoList
