@@ -21,6 +21,7 @@
 - Tailwind CSS v4
 - Vite
 - Vitest (단위 테스트)
+- lucide-react (아이콘)
 
 ## 프로젝트 구조
 

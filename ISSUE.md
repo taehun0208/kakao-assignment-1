@@ -147,6 +147,38 @@ $ npm test
 
 ---
 
+### 3. UI 개선
+
+**직접 수정한 부분**
+
+초기 생성 코드의 텍스트 버튼 UI를 사용하면서 항목이 늘어날수록 버튼 3개(완료 / 수정 / 삭제)가 시각적으로 복잡하다고 느꼈습니다. `lucide-react`를 추가해 아이콘 기반으로 교체하고 전체 UI를 다듬었습니다.
+
+**문제 6 — TodoItem 버튼 3개가 항상 노출되어 복잡함**
+
+텍스트 버튼(완료 / 수정 / 삭제)이 항목마다 나란히 표시돼 목록이 많아질수록 시각적 밀도가 높아졌습니다. 왼쪽에 원형 체크 버튼을 두고, 수정·삭제는 hover 시에만 아이콘으로 표시되도록 변경했습니다.
+
+```tsx
+// 수정 전 — 텍스트 버튼 3개 항상 노출
+<button>완료</button>
+<button>수정</button>
+<button>삭제</button>
+
+// 수정 후 — 원형 체크 + hover 시 아이콘 버튼
+<button aria-label="완료">  {/* 원형, 왼쪽 고정 */}
+  {todo.completed && <Check size={10} />}
+</button>
+<div className="opacity-0 group-hover:opacity-100">  {/* hover 시만 표시 */}
+  <button aria-label="수정"><Pencil size={14} /></button>
+  <button aria-label="삭제"><Trash2 size={14} /></button>
+</div>
+```
+
+**문제 7 — WeekView 날짜 셀의 숫자 카운트가 시각적으로 무거움**
+
+날짜마다 Todo 개수 숫자를 표시했는데, 숫자가 생기면 오히려 셀이 복잡해 보였습니다. 작은 dot 인디케이터로 대체해 "있다/없다"만 표현하도록 변경했습니다. 토요일·일요일 색상 구분과 `aria-label`도 함께 추가했습니다.
+
+---
+
 ## 구현하면서 고민한 점
 
 **고민한 점: 어디까지를 커스텀 훅으로 분리해야 할까?**
