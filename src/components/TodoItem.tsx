@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import type { Todo } from '../types';
 
 interface Props {
@@ -21,18 +21,24 @@ export default function TodoItem({
   onCancelEdit,
 }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
+  const [editError, setEditError] = useState(false);
 
   useEffect(() => {
     if (isEditing) {
       inputRef.current?.focus();
       inputRef.current?.select();
+      setEditError(false);
     }
   }, [isEditing]);
 
   function confirmEdit() {
     const value = inputRef.current?.value.trim() ?? '';
-    if (value) onEdit(todo.id, value);
-    else onCancelEdit();
+    if (!value) {
+      setEditError(true);
+      inputRef.current?.focus();
+      return;
+    }
+    onEdit(todo.id, value);
   }
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
@@ -43,14 +49,24 @@ export default function TodoItem({
   return (
     <li className={`flex items-center gap-3 p-3 rounded-lg border ${todo.completed ? 'bg-gray-50 border-gray-200' : 'bg-white border-gray-200'} mb-2`}>
       {isEditing ? (
-        <input
-          ref={inputRef}
-          type="text"
-          defaultValue={todo.text}
-          onKeyDown={handleKeyDown}
-          onBlur={confirmEdit}
-          className="flex-1 border border-indigo-400 rounded px-2 py-1 text-sm outline-none focus:ring-2 focus:ring-indigo-300"
-        />
+        <div className="flex-1 flex flex-col gap-1">
+          <input
+            ref={inputRef}
+            type="text"
+            defaultValue={todo.text}
+            onKeyDown={handleKeyDown}
+            onBlur={confirmEdit}
+            onChange={() => setEditError(false)}
+            className={`border rounded px-2 py-1 text-sm outline-none focus:ring-2 ${
+              editError
+                ? 'border-red-400 focus:ring-red-200'
+                : 'border-indigo-400 focus:ring-indigo-300'
+            }`}
+          />
+          {editError && (
+            <p className="text-xs text-red-500">할 일을 입력해주세요.</p>
+          )}
+        </div>
       ) : (
         <span className={`flex-1 text-sm ${todo.completed ? 'line-through text-gray-400' : 'text-gray-700'}`}>
           {todo.text}
