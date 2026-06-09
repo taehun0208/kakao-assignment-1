@@ -14,8 +14,8 @@ export function getMondayOfWeek(date: Date): Date {
   return d;
 }
 
-export function getWeekDates(weekOffset: number): Date[] {
-  const monday = getMondayOfWeek(new Date());
+export function getWeekDates(weekOffset: number, baseDate: Date = new Date()): Date[] {
+  const monday = getMondayOfWeek(baseDate);
   monday.setDate(monday.getDate() + weekOffset * 7);
   return Array.from({ length: 7 }, (_, i) => {
     const d = new Date(monday);
