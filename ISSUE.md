@@ -11,7 +11,7 @@
 
 ## 과제 위치
 
-- 브랜치명 : `main`
+- 브랜치명 : `week-02-곽태훈`
 - 주요 파일 : `src/components/` / `src/hooks/` / `src/utils/`
 
 ---
