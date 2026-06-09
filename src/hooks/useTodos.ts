@@ -8,25 +8,25 @@ export function useTodos() {
   const [activeFilter, setActiveFilter] = useState<FilterType>('all');
   const [selectedDate, setSelectedDate] = useState<string>(() => toDateString(new Date()));
   const [weekOffset, setWeekOffset] = useState<number>(loadWeekOffset);
-  const [editingId, setEditingId] = useState<number | null>(null);
+  const [editingId, setEditingId] = useState<string | null>(null);
 
   useEffect(() => { saveTodos(todos); }, [todos]);
   useEffect(() => { saveWeekOffset(weekOffset); }, [weekOffset]);
 
   function addTodo(text: string) {
-    setTodos(prev => [...prev, { id: Date.now(), text, completed: false, date: selectedDate }]);
+    setTodos(prev => [...prev, { id: crypto.randomUUID(), text, completed: false, date: selectedDate }]);
   }
 
-  function toggleTodo(id: number) {
+  function toggleTodo(id: string) {
     setTodos(prev => prev.map(t => t.id === id ? { ...t, completed: !t.completed } : t));
   }
 
-  function deleteTodo(id: number) {
+  function deleteTodo(id: string) {
     setTodos(prev => prev.filter(t => t.id !== id));
     if (editingId === id) setEditingId(null);
   }
 
-  function editTodo(id: number, text: string) {
+  function editTodo(id: string, text: string) {
     setTodos(prev => prev.map(t => t.id === id ? { ...t, text } : t));
     setEditingId(null);
   }

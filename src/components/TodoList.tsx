@@ -3,11 +3,11 @@ import TodoItem from './TodoItem';
 
 interface Props {
   todos: Todo[];
-  editingId: number | null;
-  onToggle: (id: number) => void;
-  onDelete: (id: number) => void;
-  onEdit: (id: number, text: string) => void;
-  onStartEdit: (id: number) => void;
+  editingId: string | null;
+  onToggle: (id: string) => void;
+  onDelete: (id: string) => void;
+  onEdit: (id: string, text: string) => void;
+  onStartEdit: (id: string) => void;
   onCancelEdit: () => void;
 }
 

@@ -4,10 +4,10 @@ import type { Todo } from '../types';
 interface Props {
   todo: Todo;
   isEditing: boolean;
-  onToggle: (id: number) => void;
-  onDelete: (id: number) => void;
-  onEdit: (id: number, text: string) => void;
-  onStartEdit: (id: number) => void;
+  onToggle: (id: string) => void;
+  onDelete: (id: string) => void;
+  onEdit: (id: string, text: string) => void;
+  onStartEdit: (id: string) => void;
   onCancelEdit: () => void;
 }
 
