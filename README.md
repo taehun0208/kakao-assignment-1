@@ -1,73 +1,53 @@
-# React + TypeScript + Vite
+# Todo App — React + TypeScript
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+1차 과제(VanillaJS)로 구현한 Todo 앱을 React + TypeScript + Tailwind CSS로 마이그레이션한 프로젝트입니다.
 
-Currently, two official plugins are available:
+## 구현 기능
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+### 필수 기능
+- **Todo CRUD** — 생성 / 수정 / 삭제 / 완료 토글
+- **상태별 필터링** — 전체 / 진행 중 / 완료
+- **주간 뷰** — 이전·다음 주 이동, 날짜별 Todo 개수 표시
+- **로컬스토리지 연동** — 새로고침 후에도 데이터 유지
 
-## React Compiler
+### 예외 처리
+- 빈 값 입력 시 인라인 에러 메시지 표시 (추가 / 수정 모두)
+- localStorage 파싱 실패 시 빈 배열로 초기화
+- 데이터 없는 상태 화면 처리
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 기술 스택
 
-## Expanding the ESLint configuration
+- React 19 + TypeScript
+- Tailwind CSS v4
+- Vite
+- Vitest (단위 테스트)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 프로젝트 구조
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+src/
+├── components/     # UI 컴포넌트
+│   ├── App.tsx
+│   ├── WeekView.tsx
+│   ├── FilterTabs.tsx
+│   ├── TodoInput.tsx
+│   ├── TodoItem.tsx
+│   └── TodoList.tsx
+├── hooks/
+│   └── useTodos.ts # 상태 및 비즈니스 로직
+├── utils/
+│   ├── date.ts     # 날짜 계산 유틸
+│   ├── storage.ts  # localStorage 읽기/쓰기
+│   ├── date.test.ts
+│   └── storage.test.ts
+└── types.ts
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 실행 방법
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev     # 개발 서버
+npm test        # 단위 테스트
+npm run build   # 프로덕션 빌드
 ```
