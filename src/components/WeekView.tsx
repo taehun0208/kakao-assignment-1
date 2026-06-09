@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import type { Todo } from '../types';
 import { toDateString, getWeekDates } from '../utils/date';
 
@@ -14,6 +15,14 @@ const DAY_NAMES = ['월', '화', '수', '목', '금', '토', '일'];
 export default function WeekView({ todos, selectedDate, weekOffset, onSelectDate, onMoveWeek }: Props) {
   const weekDates = getWeekDates(weekOffset);
   const today = toDateString(new Date());
+
+  const countByDate = useMemo(
+    () => todos.reduce<Record<string, number>>((acc, t) => {
+      acc[t.date] = (acc[t.date] ?? 0) + 1;
+      return acc;
+    }, {}),
+    [todos],
+  );
 
   const first = weekDates[0];
   const last = weekDates[6];
@@ -44,7 +53,7 @@ export default function WeekView({ todos, selectedDate, weekOffset, onSelectDate
       <div className="grid grid-cols-7 gap-1">
         {weekDates.map((date, i) => {
           const dateStr = toDateString(date);
-          const count = todos.filter(t => t.date === dateStr).length;
+          const count = countByDate[dateStr] ?? 0;
           const isToday = dateStr === today;
           const isSelected = dateStr === selectedDate;
           const isWeekend = i >= 5;
