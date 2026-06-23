@@ -82,7 +82,7 @@ export function buildTodoListPath(query: TodoPageQuery, error?: string): string 
   return `/todos?${toSearchParams(query, error).toString()}`;
 }
 
-export function buildTodoDetailPath(todoId: number, query: TodoPageQuery): string {
-  return `/todos/${todoId}?${toSearchParams(query).toString()}`;
+export function buildTodoDetailPath(todoId: number, query: TodoPageQuery, error?: string): string {
+  return `/todos/${todoId}?${toSearchParams(query, error).toString()}`;
 }
 

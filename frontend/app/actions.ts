@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { getTodos, postTodo, putTodo, removeTodo } from "./lib/api";
 import { toDateString } from "./lib/date";
-import { buildTodoListPath, parseTodoPageQueryFromForm } from "./lib/todo-query";
+import { buildTodoDetailPath, buildTodoListPath, parseTodoPageQueryFromForm } from "./lib/todo-query";
 import type { TodoQuery } from "./lib/types";
 
 export async function fetchTodos(query: TodoQuery) {
@@ -30,8 +30,12 @@ export async function updateTodo(formData: FormData) {
   const completed = formData.get("completed") === "true";
   const query = parseTodoPageQueryFromForm(formData, toDateString(new Date()));
 
-  if (!id || !text) {
-    redirect(buildTodoListPath(query, "empty"));
+  if (!id) {
+    redirect(buildTodoListPath(query));
+  }
+
+  if (!text) {
+    redirect(buildTodoDetailPath(id, query, "empty"));
   }
 
   await putTodo(id, { text, date: query.date, completed });

@@ -15,6 +15,7 @@ export default async function EditTodoPage({ params, searchParams }: Props) {
   const id = Number(todoId);
   const todo = Number.isInteger(id) && id > 0 ? await getTodo(id).catch(() => undefined) : undefined;
   const query = parseTodoPageQuery(paramsQuery, todo?.date || toDateString(new Date()));
+  const error = Array.isArray(paramsQuery.error) ? paramsQuery.error[0] : paramsQuery.error;
 
   if (!todo) {
     return (
@@ -43,8 +44,13 @@ export default async function EditTodoPage({ params, searchParams }: Props) {
             <input
               name="text"
               defaultValue={todo.text}
-              className="mt-1 h-11 w-full rounded-lg border border-gray-200 px-3 text-sm outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
+              className={`mt-1 h-11 w-full rounded-lg border px-3 text-sm outline-none focus:ring-2 ${
+                error === "empty"
+                  ? "border-red-400 focus:border-red-400 focus:ring-red-100"
+                  : "border-gray-200 focus:border-indigo-400 focus:ring-indigo-100"
+              }`}
             />
+            {error === "empty" && <p className="mt-1 text-xs text-red-500">내용을 입력해주세요.</p>}
           </label>
           <label className="block">
             <span className="text-sm font-semibold text-gray-600">날짜</span>
