@@ -2,14 +2,9 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { getTodos, postTodo, putTodo, removeTodo } from "./lib/api";
+import { postTodo, putTodo, removeTodo } from "./lib/api";
 import { toDateString } from "./lib/date";
 import { buildTodoDetailPath, buildTodoListPath, parseTodoPageQueryFromForm } from "./lib/todo-query";
-import type { TodoQuery } from "./lib/types";
-
-export async function fetchTodos(query: TodoQuery) {
-  return getTodos(query);
-}
 
 export async function createTodo(formData: FormData) {
   const text = formData.get("text")?.toString().trim();

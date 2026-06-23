@@ -131,12 +131,18 @@ def read_todos(
     filter: Literal["all", "active", "completed"] = "all",
     search: str | None = Query(default=None),
     date: str | None = Query(default=None, pattern=r"^\d{4}-\d{2}-\d{2}$"),
+    date_from: str | None = Query(default=None, pattern=r"^\d{4}-\d{2}-\d{2}$"),
+    date_to: str | None = Query(default=None, pattern=r"^\d{4}-\d{2}-\d{2}$"),
     db: Session = Depends(get_db),
 ):
     query = db.query(Todo)
 
     if date:
         query = query.filter(Todo.date == date)
+    if date_from:
+        query = query.filter(Todo.date >= date_from)
+    if date_to:
+        query = query.filter(Todo.date <= date_to)
     if filter == "active":
         query = query.filter(Todo.completed.is_(False))
     elif filter == "completed":

@@ -1,6 +1,6 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
-import { getWeekDates, toDateString } from "../lib/date";
+import { getWeekDates, offsetDateString, toDateString } from "../lib/date";
 import { buildTodoListPath } from "../lib/todo-query";
 import type { FilterType, Todo } from "../lib/types";
 
@@ -15,20 +15,22 @@ interface Props {
 const dayNames = ["월", "화", "수", "목", "금", "토", "일"];
 
 export default function WeekView({ todos, selectedDate, week, filter, search }: Props) {
-  const weekDates = getWeekDates(week);
   const today = toDateString(new Date());
+  const weekDates = getWeekDates(week);
   const countByDate = todos.reduce<Record<string, number>>((acc, todo) => {
     acc[todo.date] = (acc[todo.date] ?? 0) + 1;
     return acc;
   }, {});
   const first = weekDates[0];
   const last = weekDates[6];
+  const prevDate = offsetDateString(selectedDate, -7);
+  const nextDate = offsetDateString(selectedDate, 7);
 
   return (
     <section className="mb-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
       <div className="mb-3 flex items-center justify-between">
         <Link
-          href={buildTodoListPath({ filter, search, date: toDateString(getWeekDates(week - 1)[0]), week: week - 1 })}
+          href={buildTodoListPath({ filter, search, date: prevDate, week: week - 1 })}
           aria-label="이전 주"
           className="flex h-8 w-8 items-center justify-center rounded-md text-gray-400 hover:bg-gray-100 hover:text-gray-700"
         >
@@ -38,7 +40,7 @@ export default function WeekView({ todos, selectedDate, week, filter, search }: 
           {first.getMonth() + 1}월 {first.getDate()}일 - {last.getMonth() + 1}월 {last.getDate()}일
         </span>
         <Link
-          href={buildTodoListPath({ filter, search, date: toDateString(getWeekDates(week + 1)[0]), week: week + 1 })}
+          href={buildTodoListPath({ filter, search, date: nextDate, week: week + 1 })}
           aria-label="다음 주"
           className="flex h-8 w-8 items-center justify-center rounded-md text-gray-400 hover:bg-gray-100 hover:text-gray-700"
         >

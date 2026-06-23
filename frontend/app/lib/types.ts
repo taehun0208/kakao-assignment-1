@@ -11,5 +11,7 @@ export interface TodoQuery {
   filter?: FilterType;
   search?: string;
   date?: string;
+  date_from?: string;
+  date_to?: string;
 }
 

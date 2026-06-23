@@ -3,8 +3,8 @@ import SearchForm from "../components/SearchForm";
 import TodoCreateForm from "../components/TodoCreateForm";
 import TodoList from "../components/TodoList";
 import WeekView from "../components/WeekView";
-import { fetchTodos } from "../actions";
-import { formatDateLabel, toDateString } from "../lib/date";
+import { getTodos } from "../lib/api";
+import { formatDateLabel, getWeekDates, toDateString } from "../lib/date";
 import { parseTodoPageQuery } from "../lib/todo-query";
 
 interface Props {
@@ -16,9 +16,13 @@ export default async function TodosPage({ searchParams }: Props) {
   const query = parseTodoPageQuery(params, toDateString(new Date()));
   const error = Array.isArray(params.error) ? params.error[0] : params.error;
 
+  const weekDates = getWeekDates(query.week);
+  const weekFrom = toDateString(weekDates[0]);
+  const weekTo = toDateString(weekDates[6]);
+
   const [visibleTodos, weekTodos] = await Promise.all([
-    fetchTodos({ filter: query.filter, search: query.search, date: query.date }),
-    fetchTodos({}),
+    getTodos({ filter: query.filter, search: query.search, date: query.date }),
+    getTodos({ date_from: weekFrom, date_to: weekTo }),
   ]);
 
   return (

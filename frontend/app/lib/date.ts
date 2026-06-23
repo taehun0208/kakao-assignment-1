@@ -23,6 +23,13 @@ export function getWeekDates(weekOffset: number, baseDate: Date = new Date()): D
   });
 }
 
+export function offsetDateString(dateStr: string, days: number): string {
+  const [y, m, d] = dateStr.split("-").map(Number);
+  const date = new Date(y, m - 1, d);
+  date.setDate(date.getDate() + days);
+  return toDateString(date);
+}
+
 export function formatDateLabel(dateStr: string): string {
   const [y, m, d] = dateStr.split("-").map(Number);
   return `${y}년 ${m}월 ${d}일`;

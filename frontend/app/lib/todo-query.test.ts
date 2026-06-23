@@ -31,5 +31,11 @@ describe("Todo URL builders", () => {
       "/todos/7?filter=active&search=report&date=2026-06-22&week=-1",
     );
   });
+
+  it("passes error to detail path", () => {
+    expect(buildTodoDetailPath(7, query, "empty")).toBe(
+      "/todos/7?filter=active&search=report&date=2026-06-22&week=-1&error=empty",
+    );
+  });
 });
 
