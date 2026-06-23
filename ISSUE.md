@@ -298,8 +298,6 @@ $ npm test
 - `useActionState`로 Server Action 성공/실패 상태를 연결해 제출 중 UI 개선
 - `date.ts`의 `toDateString`이 서버의 로컬 시각 기준으로 동작하는 점 — 한국 사용자가 자정 부근에 접속하면 UTC 서버와 날짜가 어긋날 수 있음. 클라이언트에서 로컬 날짜를 파라미터로 넘기는 방식 검토
 
----
-
 ## 실행 방법
 
 ```bash
@@ -315,14 +313,3 @@ cd frontend
 npm install
 npm run dev
 ```
-
----
-
-## 제출 전 체크리스트
-
-- [ ] `localhost:8000/docs`에서 API 문서 확인
-- [ ] `localhost:3000/todos`에서 전체 CRUD 확인
-- [ ] 빈 입력 제출 시 에러 메시지 확인
-- [ ] 필터와 검색 URL 파라미터 유지 확인
-- [ ] `.env.local`이 `.gitignore`에 포함되어 있는지 확인
-- [ ] 불필요한 로그와 주석 제거 확인
